@@ -1,0 +1,258 @@
+/* App-wide base styles */
+:root {
+  --primary: #1976d2;
+  --secondary: #90caf9;
+  --accent: #388e3c;
+  --team-x: #1976d2;
+  --team-o: #388e3c;
+  --grid-bg: #ffffff;
+  --grid-border: #1976d2;
+  --winner-bg: #e3f2fd;
+  --draw-bg: #f5f5f5;
+  --score-bg: #f1f8e9;
+  --title-size: 2.2rem;
+  --status-size: 1.1rem;
+  --min-board-size: 270px;
+  --max-board-size: 410px;
+  --square-size: 72px;
+  --square-font: 2.2rem;
+}
+
+/* Page wrapper */
+.ttt-app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--grid-bg);
+  color: #222;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  justify-content: center;
+  padding: 0 10px 20px 10px;
+}
+
+/* Panel (status, restart, scores) */
+.ttt-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+  margin-top: 28px;
+}
+.ttt-title {
+  margin-bottom: 6px;
+  font-size: var(--title-size);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--primary);
+  user-select: none;
+}
+.ttt-status {
+  font-size: var(--status-size);
+  letter-spacing: 1.5px;
+  font-weight: 500;
+  min-height: 29px;
+  margin-bottom: 16px;
+  margin-top: 4px;
+  color: #222;
+  transition: background 0.36s cubic-bezier(.8,.35,0,1.1), color 0.24s;
+  padding: 7px 20px;
+  border-radius: 6px;
+}
+.ttt-status.x-win {
+  background: var(--winner-bg);
+  color: var(--team-x);
+}
+.ttt-status.o-win {
+  background: var(--winner-bg);
+  color: var(--team-o);
+}
+.ttt-status.draw {
+  background: var(--draw-bg);
+  color: #444;
+}
+.ttt-restart-btn {
+  margin-bottom: 11px;
+  margin-top: 0;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  padding: 7px 20px;
+  background: var(--secondary);
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 7px 0 rgba(25,118,210,0.05);
+}
+.ttt-restart-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+.ttt-restart-btn:active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Scoreboard styling */
+.ttt-scoreboard {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  margin: 6px 0 0 0;
+  align-items: center;
+  justify-content: center;
+}
+.ttt-score {
+  border-radius: 7px;
+  border: 2px solid var(--score-bg, #d9f);
+  padding: 7px 14px 6px 14px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 78px;
+  min-height: 50px;
+  font-weight: 500;
+  transition: background 0.23s, border-color 0.23s, color 0.19s;
+}
+.ttt-score.active {
+  background: var(--score-bg);
+}
+.ttt-score.highlight {
+  border-color: var(--secondary);
+  background: var(--winner-bg);
+  color: var(--primary);
+}
+.ttt-score-label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.5px;
+}
+.ttt-score-value {
+  font-size: 1.2rem;
+}
+
+/* Board styles */
+.ttt-board-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  margin: 0;
+}
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(62px, 1fr));
+  grid-template-rows: repeat(3, minmax(62px, 1fr));
+  gap: 0;
+  background: var(--grid-bg);
+  border-radius: 12px;
+  border: 3.3px solid var(--grid-border);
+  min-width: var(--min-board-size);
+  min-height: var(--min-board-size);
+  max-width: var(--max-board-size);
+  max-height: var(--max-board-size);
+  box-shadow: 0 2px 18px 0 rgba(25,118,210,0.07);
+  position: relative;
+  transition: box-shadow 0.21s cubic-bezier(.69,.23,.29,.93), border 0.21s;
+  margin: 0 auto 24px auto;
+}
+.ttt-board.board-x-win {
+  box-shadow: 0 0 24px 0 var(--team-x, #1976d2);
+  border-color: var(--team-x, #1976d2);
+}
+.ttt-board.board-o-win {
+  box-shadow: 0 0 24px 0 var(--team-o, #388e3c);
+  border-color: var(--team-o, #388e3c);
+}
+.ttt-board.board-draw {
+  box-shadow: 0 0 17px 0 var(--draw-bg, #f5f5f5);
+  border-color: var(--secondary);
+}
+
+/* Tic-tac-toe cell (square) */
+.ttt-square {
+  background: #fff;
+  border: 2px solid var(--grid-border);
+  outline: none;
+  aspect-ratio: 1/1;
+  height: 83px;
+  max-width: 120px;
+  font-size: var(--square-font);
+  font-weight: 700;
+  color: var(--primary);
+  cursor: pointer;
+  transition: background 0.19s, border 0.21s, color 0.16s;
+  will-change: background, border, color;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+.ttt-square:hover:not(:disabled):not(.filled):not(.highlight) {
+  background: var(--secondary);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.ttt-square.filled {
+  cursor: default;
+  background: #fafbfc;
+}
+.ttt-square.highlight {
+  border-color: var(--accent);
+  background: var(--winner-bg);
+  color: var(--accent);
+}
+.ttt-square:disabled {
+  opacity: 1;
+  pointer-events: none;
+}
+
+.ttt-footer {
+  padding-top: 8px;
+  text-align: center;
+  color: #6085b8;
+  font-size: 1em;
+  margin-bottom: 0;
+}
+.ttt-credit a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 0.75px;
+}
+
+/* Responsive styles */
+@media (max-width: 650px) {
+  .ttt-board {
+    min-width: 186px;
+    min-height: 186px;
+    max-width: 97vw;
+    max-height: 97vw;
+  }
+  .ttt-scoreboard {
+    flex-direction: column;
+    gap: 7px;
+  }
+  .ttt-panel {
+    margin-bottom: 11px;
+    margin-top: 7px;
+  }
+  .ttt-title {
+    font-size: 1.45rem;
+    margin-bottom: 2px;
+  }
+}
+
+/* Visually hidden class for any a11y screen reader text if needed */
+.sr-only {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
